@@ -7,9 +7,6 @@ Date: September 7, 2023
 '''
 
 
-from multiprocessing import Value
-
-
 class ChatUserValidator:
     '''Defines the validation methods for ChatUser data.
     '''
@@ -37,6 +34,11 @@ class ChatUserModel:
     def create(conn, cursor, data):
         cursor.execute("INSERT INTO ChatUser (wave_id, name, phone, device_info, type) VALUES (?, ?, ?, ?, ?)",
                        (data['wave_id'], data['name'], data['phone'], data['device_info'], data['type']))
+
+    @staticmethod
+    def get(conn, cursor):
+        cursor.execute("SELECT * FROM ChatUser")
+        return cursor.fetchall()
 
     @staticmethod
     def get_by_id(conn, cursor, id):
